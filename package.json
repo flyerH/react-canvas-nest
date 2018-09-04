@@ -1,0 +1,32 @@
+{
+  "name": "react-canvas-nest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/react-canvas-nest.js",
+  "scripts": {
+    "start": "npm run dev",
+    "build": "rimraf dist/* && webpack --config ./config/webpack.conf.build.js",
+    "dev": "npm run build -- --watch & webpack-dev-server --color --config ./config/webpack.conf.dev.js"
+  },
+  "author": "flyerH",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "css-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.2",
+    "postcss-loader": "^3.0.0",
+    "precss": "^3.1.2",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  },
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  }
+}
