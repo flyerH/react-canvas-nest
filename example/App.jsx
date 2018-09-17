@@ -5,9 +5,7 @@ import './style';
 class App extends Component {
     render() {
         return (
-            <div className='app'>
-                <ReactCanvasNest />
-            </div>
+            <ReactCanvasNest className='test' />
         )
     }
 }

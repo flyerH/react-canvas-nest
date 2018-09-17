@@ -5,13 +5,15 @@
   "main": "./dist/react-canvas-nest.js",
   "scripts": {
     "start": "npm run dev",
-    "build": "rimraf dist/* && webpack --config ./config/webpack.conf.build.js",
-    "dev": "npm run build -- --watch & webpack-dev-server --color --config ./config/webpack.conf.dev.js"
+    "build": "webpack --config ./config/webpack.conf.build.js",
+    "prod": "rimraf dist/* && npm run build",
+    "dev": "rimraf dist/* && (npm run build -- --watch --devtool cheap-module-eval-source-map & webpack-dev-server --color --config ./config/webpack.conf.dev.js)"
   },
   "author": "flyerH",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.2",
