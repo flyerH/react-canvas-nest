@@ -8,31 +8,38 @@ class ReactCanvasNest extends Component {
         const { style, config } = this.props;
 
         const canvasStyle = {
-            zIndex      : -1,
-            opacity     : 1,           // transparency of canvas     
-            display     : 'block',
+            zIndex : -1,
+            opacity: 1,         // transparency of canvas     
+            display: 'block',
             ...style
         }
 
         const canvasConfig = {
-            count: 99,     // count of points 
-            dist : 6000,   // maximum length of line segments between two points
+            count       : 99,          // count of points 
+            dist        : 6000,        // maximum length of line segments between two points
             pointOpacity: 1,           // transparency of points
             lineColor   : '0,0,0',
-            lineWidth   :  10,           // multiple of line width
+            lineWidth   : 1,           // multiple of line width
             pointColor  : '255,0,0',
-            pointR      : 3,// radius of the point
+            pointR      : 3,           // radius of the point,
+            follow      : true,
             ...config,
         };
 
         this.state = {
-            canvasRef   : null,
             outDivWidth : null,
             outDivHeight: null,
             canvasStyle,
             canvasConfig
         }
 
+    }
+
+    shouldComponentUpdate = (nextProps) => {
+        if (nextProps.follow != undefined && this.props.follow !== nextProps.follow){
+            this.mouseEvent(nextProps.follow);
+        }
+        return true;
     }
 
     componentDidMount = () => {
@@ -44,14 +51,12 @@ class ReactCanvasNest extends Component {
         }, this.init);
     }
 
-
     randomPoints = () => {
         const { canvasConfig } = this.state;
-        // const canvasRef = this.canvasRef.current;
-        const { canvasRef } = this;
-        const points        = [];
-        const width         = canvasRef.clientWidth;
-        const height        = canvasRef.clientHeight;
+        const { canvasRef }    = this;
+        const points           = [];
+        const width            = canvasRef.clientWidth;
+        const height           = canvasRef.clientHeight;
         for (let index = 0; index < canvasConfig.count; ++index) {
             points.push({
                 x    : Math.random() * width,
@@ -69,7 +74,7 @@ class ReactCanvasNest extends Component {
     }
 
     init = () => {
-        const { canvasRef } = this
+        const { canvasRef } = this;
 
         const points = this.randomPoints();
 
@@ -80,25 +85,73 @@ class ReactCanvasNest extends Component {
         };
 
         const pointsWithMouse = [...points, mouseCoordinate];
-
         this.setState({
             context: canvasRef.getContext('2d'),
             points,
             mouseCoordinate,
             pointsWithMouse
+        }, () => {
+            this.mouseEvent(this.state.canvasConfig.follow);
+            requestAnimationFrame(this.drawNest);
         });
-        requestAnimationFrame(this.drawNest);
+    }
+
+    mouseEvent = (follow) => {
+
+        const { canvasRef } = this;
+
+        if (follow) {
+            canvasRef.onmousemove = (e) => {
+                const { mouseCoordinate, pointsWithMouse } = this.state;
+
+                const x      = e.clientX - canvasRef.parentNode.offsetLeft + document.scrollingElement.scrollLeft;
+                const y      = e.clientY - canvasRef.parentNode.offsetTop + document.scrollingElement.scrollTop;
+                const points = [...pointsWithMouse];
+
+                points[points.length - 1] = { ...points[points.length - 1], x, y }
+                this.setState({
+                    mouseCoordinate: Object.assign({}, mouseCoordinate, { x, y }),
+                    pointsWithMouse: points
+                });
+            };
+
+            canvasRef.onmouseout = () => {
+                const { mouseCoordinate, pointsWithMouse } = this.state;
+                const points                               = [...pointsWithMouse];
+
+                points[points.length - 1] = { ...points[points.length - 1], x: null, y: null }
+
+                this.setState({
+                    mouseCoordinate: Object.assign({}, mouseCoordinate, { x: null, y: null }),
+                    pointsWithMouse: points
+                });
+
+            }
+
+        } else {
+            const { mouseCoordinate, pointsWithMouse } = this.state;
+
+            const points = [...pointsWithMouse];
+
+            points[points.length - 1] = { ...points[points.length - 1], x:null, y:null }
+
+            this.setState({
+                mouseCoordinate: Object.assign({}, mouseCoordinate, { x: null, y: null }),
+                pointsWithMouse: points
+            });
+            canvasRef.onmousemove = null;
+            canvasRef.onmouseout  = null;
+        }
     }
 
     drawNest = () => {
-        const { context, outDivWidth, outDivHeight, points, pointsWithMouse, canvasStyle, canvasConfig } = this.state;
-        const { pointColor, pointR, pointOpacity, lineWidth,lineColor }                                            = canvasConfig;
+        const { context, outDivWidth, outDivHeight, points, pointsWithMouse, canvasConfig, mouseCoordinate } = this.state;
+        const { pointColor, pointR, pointOpacity, lineWidth, lineColor }                                     = canvasConfig;
 
         context.clearRect(0, 0, outDivWidth, outDivHeight);
 
         for (let index = 0; index < points.length; ++index) {
             const point = points[index];
-            // context.fillRect(circle.x - 0.5, circle.y - 0.5, 1, 1);
             context.beginPath();
             context.fillStyle = `rgba(${pointColor},${pointOpacity})`;
             context.arc(point.x, point.y, pointR, 0, 2 * Math.PI);
@@ -111,22 +164,23 @@ class ReactCanvasNest extends Component {
 
             for (let nextIndex = 0; nextIndex < pointsWithMouse.length; ++nextIndex) {
                 const nextPoint = pointsWithMouse[nextIndex];
+                if (nextPoint.x) {
+                    const xDist = point.x - nextPoint.x;
+                    const yDist = point.y - nextPoint.y;
+                    const dist  = xDist * xDist + yDist * yDist;  // the square of the distance between two points
 
-                const xDist = point.x - nextPoint.x;
-                const yDist = point.y - nextPoint.y;
-                const dist  = xDist * xDist + yDist * yDist;  // the square of the distance between two points
+                    if (dist < nextPoint.max) {
 
-                if (dist < nextPoint.max && nextPoint.x !== null) {
-                    // dist < nextPoint.max && (
-                    //     nextPoint === current && dist >= nextPoint.max / 2 && (point.x -= 0.03 * x_dist, point.y -= 0.03 * y_dist));     // 靠近的时候加速
-                    const scale = (nextPoint.max - dist) / (nextPoint.max);
-                    // console.log(scale * lineWidth)
-                    context.beginPath();
-                    context.lineWidth   = (scale * lineWidth) / 2;
-                    context.strokeStyle = `rgba(${lineColor},${scale})`;
-                    context.moveTo(point.x, point.y);
-                    context.lineTo(nextPoint.x, nextPoint.y);
-                    context.stroke();
+                        nextIndex + 1 === pointsWithMouse.length && dist >= nextPoint.max / 2 && (point.x -= 0.03 * xDist, point.y -= 0.03 * yDist);
+
+                        const scale = (nextPoint.max - dist) / (nextPoint.max);
+                        context.beginPath();
+                        context.lineWidth   = (scale * lineWidth) / 2;
+                        context.strokeStyle = `rgba(${lineColor},${scale})`;
+                        context.moveTo(point.x, point.y);
+                        context.lineTo(nextPoint.x, nextPoint.y);
+                        context.stroke();
+                    }
                 }
             }
         }
