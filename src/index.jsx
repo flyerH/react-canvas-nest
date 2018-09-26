@@ -8,9 +8,10 @@ class ReactCanvasNest extends Component {
         const { style, config } = this.props;
 
         const canvasStyle = {
-            zIndex : -1,
-            opacity: 1,         // transparency of canvas     
-            display: 'block',
+            zIndex  : -1,
+            opacity : 1,            // transparency of canvas     
+            display : 'block',
+            position: 'absolute',
             ...style
         }
 
@@ -43,12 +44,18 @@ class ReactCanvasNest extends Component {
     }
 
     componentDidMount = () => {
-        const { canvasRef } = this;
+
+        const parent    = this.canvasRef.parentNode;
+        const { style } = parent;
+
+        if (!style.position || style.positon === 'static')
+            style.position = 'relative';
 
         this.setState({
-            outDivWidth : canvasRef.parentNode.clientWidth,
-            outDivHeight: canvasRef.parentNode.clientHeight
+            outDivWidth : parent.clientWidth,
+            outDivHeight: parent.clientHeight
         }, this.init);
+
     }
 
     randomPoints = () => {
@@ -74,7 +81,6 @@ class ReactCanvasNest extends Component {
     }
 
     init = () => {
-        const { canvasRef } = this;
 
         const points = this.randomPoints();
 
@@ -86,7 +92,7 @@ class ReactCanvasNest extends Component {
 
         const pointsWithMouse = [...points, mouseCoordinate];
         this.setState({
-            context: canvasRef.getContext('2d'),
+            context: this.canvasRef.getContext('2d'),
             points,
             mouseCoordinate,
             pointsWithMouse
@@ -98,14 +104,14 @@ class ReactCanvasNest extends Component {
 
     mouseEvent = (follow) => {
 
-        const { canvasRef } = this;
+        const parent = this.canvasRef.parentNode;
 
         if (follow) {
-            canvasRef.onmousemove = (e) => {
+            parent.onmousemove = (e) => {
                 const { mouseCoordinate, pointsWithMouse } = this.state;
 
-                const x      = e.clientX - canvasRef.parentNode.offsetLeft + document.scrollingElement.scrollLeft;
-                const y      = e.clientY - canvasRef.parentNode.offsetTop + document.scrollingElement.scrollTop;
+                const x      = e.clientX - parent.offsetLeft + document.scrollingElement.scrollLeft;
+                const y      = e.clientY - parent.offsetTop + document.scrollingElement.scrollTop;
                 const points = [...pointsWithMouse];
 
                 points[points.length - 1] = { ...points[points.length - 1], x, y }
@@ -115,7 +121,7 @@ class ReactCanvasNest extends Component {
                 });
             };
 
-            canvasRef.onmouseout = () => {
+            parent.onmouseout = () => {
                 const { mouseCoordinate, pointsWithMouse } = this.state;
                 const points                               = [...pointsWithMouse];
 
@@ -139,8 +145,8 @@ class ReactCanvasNest extends Component {
                 mouseCoordinate: Object.assign({}, mouseCoordinate, { x: null, y: null }),
                 pointsWithMouse: points
             });
-            canvasRef.onmousemove = null;
-            canvasRef.onmouseout  = null;
+            window.onmousemove = null;
+            window.onmouseout  = null;
         }
     }
 

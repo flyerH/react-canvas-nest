@@ -1,10 +1,11 @@
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
     mode: 'production',
     entry: './src/index.jsx',
     output: {
-        filename: 'react-canvas-nest.js',
+        filename: 'react-canvas-nest.min.js',
         path: path.resolve(__dirname, '../dist'),
         libraryTarget: 'umd',
     },
@@ -18,4 +19,23 @@ module.exports = {
             loader: 'babel-loader',
         }]
     },
+    externals: {
+        "react": 'react',
+        'react-dom': 'ReactDOM'
+    },
+    optimization: {
+        minimizer: [new UglifyJsPlugin({
+            cache: true,
+            parallel: true,
+            uglifyOptions: {
+                compress: {
+                    collapse_vars: true,
+                },
+                output: {
+                    comments: false,
+                    beautify: false,
+                }
+            }
+        })]
+    }   
 };

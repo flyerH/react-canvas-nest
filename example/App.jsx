@@ -16,7 +16,7 @@ class App extends Component {
                     this.setState({
                         follow: !this.state.follow
                     })
-                }} style={{ position: "absolute" }}>Stop Follow</button>
+                }} className='followBtn'>Stop Follow</button>
                 <ReactCanvasNest className='test' follow={this.state.follow} />
             </div>
 

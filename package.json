@@ -2,15 +2,29 @@
   "name": "react-canvas-nest",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/react-canvas-nest.js",
+  "main": "./dist/react-canvas-nest.min.js",
   "scripts": {
     "start": "npm run dev",
     "build": "webpack --config ./config/webpack.conf.build.js",
     "prod": "rimraf dist/* && npm run build",
     "dev": "rimraf dist/* && (npm run build -- --watch --devtool cheap-module-eval-source-map & webpack-dev-server --color --config ./config/webpack.conf.dev.js)"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flyerH/react-canvas-nest.git"
+  },
+  "keywords": [
+    "canvas",
+    "nest",
+    "canvas-nest",
+    "react-nest"
+  ],
   "author": "flyerH",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/flyerH/react-canvas-nest/issues"
+  },
+  "homepage": "https://github.com/flyerH/react-canvas-nest#readme",
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
