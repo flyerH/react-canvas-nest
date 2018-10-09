@@ -37,10 +37,15 @@ class ReactCanvasNest extends Component {
     }
 
     shouldComponentUpdate = (nextProps) => {
-        if (nextProps.follow != undefined && this.props.follow !== nextProps.follow){
-            this.mouseEvent(nextProps.follow);
+
+        const { config } = nextProps;
+
+        if (config && config.follow != undefined && this.props.config.follow !== config.follow) {
+            this.mouseEvent(config.follow);
         }
+
         return true;
+
     }
 
     componentDidMount = () => {
@@ -59,11 +64,13 @@ class ReactCanvasNest extends Component {
     }
 
     randomPoints = () => {
+
         const { canvasConfig } = this.state;
         const { canvasRef }    = this;
         const points           = [];
         const width            = canvasRef.clientWidth;
         const height           = canvasRef.clientHeight;
+
         for (let index = 0; index < canvasConfig.count; ++index) {
             points.push({
                 x    : Math.random() * width,
@@ -73,7 +80,9 @@ class ReactCanvasNest extends Component {
                 max  : canvasConfig.dist
             })
         }
+
         return points;
+
     };
 
     setCanvas = element => {
@@ -100,6 +109,7 @@ class ReactCanvasNest extends Component {
             this.mouseEvent(this.state.canvasConfig.follow);
             requestAnimationFrame(this.drawNest);
         });
+
     }
 
     mouseEvent = (follow) => {
@@ -107,7 +117,9 @@ class ReactCanvasNest extends Component {
         const parent = this.canvasRef.parentNode;
 
         if (follow) {
+
             parent.onmousemove = (e) => {
+                
                 const { mouseCoordinate, pointsWithMouse } = this.state;
 
                 const x      = e.clientX - parent.offsetLeft + document.scrollingElement.scrollLeft;
@@ -119,9 +131,11 @@ class ReactCanvasNest extends Component {
                     mouseCoordinate: Object.assign({}, mouseCoordinate, { x, y }),
                     pointsWithMouse: points
                 });
+                
             };
 
             parent.onmouseout = () => {
+                
                 const { mouseCoordinate, pointsWithMouse } = this.state;
                 const points                               = [...pointsWithMouse];
 
@@ -135,18 +149,20 @@ class ReactCanvasNest extends Component {
             }
 
         } else {
+
             const { mouseCoordinate, pointsWithMouse } = this.state;
 
             const points = [...pointsWithMouse];
 
-            points[points.length - 1] = { ...points[points.length - 1], x:null, y:null }
+            points[points.length - 1] = { ...points[points.length - 1], x: null, y: null }
 
             this.setState({
                 mouseCoordinate: Object.assign({}, mouseCoordinate, { x: null, y: null }),
                 pointsWithMouse: points
             });
-            window.onmousemove = null;
-            window.onmouseout  = null;
+            parent.onmousemove = null;
+            parent.onmouseout  = null;
+
         }
     }
 
@@ -175,18 +191,17 @@ class ReactCanvasNest extends Component {
                     const yDist = point.y - nextPoint.y;
                     const dist  = xDist * xDist + yDist * yDist;  // the square of the distance between two points
 
-                    if (dist < nextPoint.max) {
-
+                    if (dist < nextPoint.max)
                         nextIndex + 1 === pointsWithMouse.length && dist >= nextPoint.max / 2 && (point.x -= 0.03 * xDist, point.y -= 0.03 * yDist);
 
-                        const scale = (nextPoint.max - dist) / (nextPoint.max);
-                        context.beginPath();
-                        context.lineWidth   = (scale * lineWidth) / 2;
-                        context.strokeStyle = `rgba(${lineColor},${scale})`;
-                        context.moveTo(point.x, point.y);
-                        context.lineTo(nextPoint.x, nextPoint.y);
-                        context.stroke();
-                    }
+                    const scale = (nextPoint.max - dist) / (nextPoint.max);
+                    context.beginPath();
+                    context.lineWidth   = (scale * lineWidth) / 2;
+                    context.strokeStyle = `rgba(${lineColor},${scale})`;
+                    context.moveTo(point.x, point.y);
+                    context.lineTo(nextPoint.x, nextPoint.y);
+                    context.stroke();
+
                 }
             }
         }

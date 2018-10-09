@@ -10,14 +10,15 @@ class App extends Component {
         }
     }
     render() {
+        const { follow } = this.state;
         return (
             <div style={{ width: '100%', height: '100%' }}>
                 <button onClick={() => {
                     this.setState({
-                        follow: !this.state.follow
+                        follow: !follow
                     })
-                }} className='followBtn'>Stop Follow</button>
-                <ReactCanvasNest className='test' follow={this.state.follow} />
+                }} className='followBtn'>{ follow ? 'Stop' : 'Start' } Follow</button>
+                <ReactCanvasNest className='test' config = {{ follow }} />
             </div>
 
         )
