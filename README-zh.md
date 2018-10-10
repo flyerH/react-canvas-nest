@@ -52,7 +52,7 @@ import ReactCanvasNest from 'react-canvas-nest';
 
 | 参数          | 说明             | 默认值     |
 | ------------ | :--------------: | :-------: |
-| count        | 点的数量          | 99        |
+| count        | 点的数量          | 88        |
 | pointR       | 点的半径          | 1         |
 | pointColor   | 点的颜色          | 255, 0, 0 |
 | pointOpacity | 点的透明度        | 1         |

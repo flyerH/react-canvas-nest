@@ -37,7 +37,7 @@ import ReactCanvasNest from 'react-canvas-nest';
 ### config
 | Property     | Description                                        | Default   |
 | ------------ | :------------------------------------------------: | :-------: |
-| count        | count of points                                    | 99        |
+| count        | count of points                                    | 88        |
 | pointR       | radius of the point                                | 1         |
 | pointColor   |                                                    | 255, 0, 0 |
 | pointOpacity | transparency of points                             | 1         |

@@ -16,13 +16,13 @@ class ReactCanvasNest extends Component {
         }
 
         const canvasConfig = {
-            count       : 99,          // count of points 
+            count       : 88,          // count of points 
             dist        : 6000,        // maximum length of line segments between two points
             pointOpacity: 1,           // transparency of points
             lineColor   : '0,0,0',
             lineWidth   : 1,           // multiple of line width
             pointColor  : '255,0,0',
-            pointR      : 3,           // radius of the point
+            pointR      : 1,           // radius of the point
             follow      : true,
             mouseDist   : 20000,       // mouse point dist
             ...config,
@@ -58,27 +58,29 @@ class ReactCanvasNest extends Component {
             style.position = 'relative';
 
         this.setState({
+
             outDivWidth : parent.clientWidth,
             outDivHeight: parent.clientHeight
+
         }, this.init);
 
     }
 
     randomPoints = () => {
 
-        const { canvasConfig } = this.state;
-        const { canvasRef }    = this;
-        const points           = [];
-        const width            = canvasRef.clientWidth;
-        const height           = canvasRef.clientHeight;
+        const { count, dist } = this.state.canvasConfig;
+        const { canvasRef }   = this;
+        const points          = [];
+        const width           = canvasRef.clientWidth;
+        const height          = canvasRef.clientHeight;
 
-        for (let index = 0; index < canvasConfig.count; ++index) {
+        for (let index = 0; index < count; ++index) {
             points.push({
                 x    : Math.random() * width,
                 y    : Math.random() * height,
                 xStep: 2 * Math.random() - 1,    // step size of point movement 
                 yStep: 2 * Math.random() - 1,
-                max  : canvasConfig.dist
+                max  : dist
             })
         }
 
@@ -87,94 +89,93 @@ class ReactCanvasNest extends Component {
     };
 
     setCanvas = element => {
+
         this.canvasRef = element;
+
     }
 
     init = () => {
+
         const { mouseDist, follow } = this.state.canvasConfig;
-
-        const points = this.randomPoints();
-
-        const mouseCoordinate = {    // mouse coordinate
+        const points                = this.randomPoints();
+        const mouseCoordinate       = {    // mouse coordinate
             x  : null,
             y  : null,
             max: mouseDist
         };
-
         const pointsWithMouse = [...points, mouseCoordinate];
+
         this.setState({
+
             context: this.canvasRef.getContext('2d'),
             points,
-            mouseCoordinate,
             pointsWithMouse
+
         }, () => {
+
             this.mouseEvent(follow);
             requestAnimationFrame(this.drawNest);
+
         });
 
     }
+
+    
 
     mouseEvent = (follow) => {
 
         const parent = this.canvasRef.parentNode;
 
+        const setMouseCoordinate = (x, y) => {
+        
+            const { pointsWithMouse, canvasConfig } = this.state;
+            const points                            = [...pointsWithMouse];
+    
+            points[points.length - 1] = { x, y, max: canvasConfig.mouseDist }
+            this.setState({
+                pointsWithMouse: points
+            });
+    
+        };
+
+        const followMouse = e => {
+
+            const x = e.clientX - parent.offsetLeft + document.scrollingElement.scrollLeft;
+            const y = e.clientY - parent.offsetTop + document.scrollingElement.scrollTop;
+            setMouseCoordinate(x, y);
+
+        }
+
+        const clearMouse = () => {
+
+            setMouseCoordinate(null, null);
+
+        }
+
         if (follow) {
 
-            parent.onmousemove = (e) => {
-                
-                const { mouseCoordinate, pointsWithMouse } = this.state;
-
-                const x      = e.clientX - parent.offsetLeft + document.scrollingElement.scrollLeft;
-                const y      = e.clientY - parent.offsetTop + document.scrollingElement.scrollTop;
-                const points = [...pointsWithMouse];
-
-                points[points.length - 1] = { ...points[points.length - 1], x, y }
-                this.setState({
-                    mouseCoordinate: Object.assign({}, mouseCoordinate, { x, y }),
-                    pointsWithMouse: points
-                });
-                
-            };
-
-            parent.onmouseout = () => {
-                
-                const { mouseCoordinate, pointsWithMouse } = this.state;
-                const points                               = [...pointsWithMouse];
-
-                points[points.length - 1] = { ...points[points.length - 1], x: null, y: null }
-
-                this.setState({
-                    mouseCoordinate: Object.assign({}, mouseCoordinate, { x: null, y: null }),
-                    pointsWithMouse: points
-                });
-
-            }
+            parent.onmousemove = followMouse;
+            parent.onmouseout  = clearMouse;
 
         } else {
 
-            const { mouseCoordinate, pointsWithMouse } = this.state;
-
-            const points = [...pointsWithMouse];
-
-            points[points.length - 1] = { ...points[points.length - 1], x: null, y: null }
-
-            this.setState({
-                mouseCoordinate: Object.assign({}, mouseCoordinate, { x: null, y: null }),
-                pointsWithMouse: points
-            });
             parent.onmousemove = null;
             parent.onmouseout  = null;
+            clearMouse();
 
         }
+
     }
 
     drawNest = () => {
-        const { context, outDivWidth, outDivHeight, points, pointsWithMouse, canvasConfig, mouseCoordinate } = this.state;
-        const { pointColor, pointR, pointOpacity, lineWidth, lineColor }                                     = canvasConfig;
+
+        const { context, outDivWidth, outDivHeight, points, pointsWithMouse, canvasConfig } = this.state;
+        const { pointColor, pointR, pointOpacity, lineWidth, lineColor }                    = canvasConfig;
 
         context.clearRect(0, 0, outDivWidth, outDivHeight);
 
         for (let index = 0; index < points.length; ++index) {
+
             const point = points[index];
             context.beginPath();
             context.fillStyle = `rgba(${pointColor},${pointOpacity})`;
@@ -187,8 +188,11 @@ class ReactCanvasNest extends Component {
             point.yStep *= (point.y + pointR > outDivHeight || point.y - pointR < 0) ? -1 : 1;
 
             for (let nextIndex = 0; nextIndex < pointsWithMouse.length; ++nextIndex) {
+
                 const nextPoint = pointsWithMouse[nextIndex];
+
                 if (nextPoint.x) {
+
                     const xDist = point.x - nextPoint.x;
                     const yDist = point.y - nextPoint.y;
                     const dist  = xDist * xDist + yDist * yDist;  // the square of the distance between two points
@@ -205,16 +209,21 @@ class ReactCanvasNest extends Component {
                     context.stroke();
 
                 }
+
             }
+
         }
         requestAnimationFrame(this.drawNest);
     }
 
     render() {
+
         const { canvasStyle, outDivWidth, outDivHeight } = this.state;
+        
         return (
             <canvas ref = {this.setCanvas} style = {canvasStyle} width = {outDivWidth} height = {outDivHeight} className = {this.props.className || ''} />
         )
+
     }
 }
 
