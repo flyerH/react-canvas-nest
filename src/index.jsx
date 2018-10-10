@@ -24,6 +24,7 @@ class ReactCanvasNest extends Component {
             pointColor  : '255,0,0',
             pointR      : 3,           // radius of the point
             follow      : true,
+            mouseDist   : 20000,       // mouse point dist
             ...config,
         };
 
@@ -90,13 +91,14 @@ class ReactCanvasNest extends Component {
     }
 
     init = () => {
+        const { mouseDist, follow } = this.state.canvasConfig;
 
         const points = this.randomPoints();
 
         const mouseCoordinate = {    // mouse coordinate
             x  : null,
             y  : null,
-            max: 20000
+            max: mouseDist
         };
 
         const pointsWithMouse = [...points, mouseCoordinate];
@@ -106,7 +108,7 @@ class ReactCanvasNest extends Component {
             mouseCoordinate,
             pointsWithMouse
         }, () => {
-            this.mouseEvent(this.state.canvasConfig.follow);
+            this.mouseEvent(follow);
             requestAnimationFrame(this.drawNest);
         });
 

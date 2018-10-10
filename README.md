@@ -4,7 +4,9 @@
 English | [简体中文](./README-zh.md)
 >  React component for a nest backgroud.
 
-Creativity is inspired by [canvas-nest.js](https://github.com/hustcc/canvas-nest.js)
+Creativity is inspired by [canvas-nest.js](https://github.com/hustcc/canvas-nest.js)  
+
+![screenshot](./screenshot.jpg)
 
 ## Install
 ```bash
@@ -43,6 +45,8 @@ import ReactCanvasNest from 'react-canvas-nest';
 | lineColor    |                                                    | 0, 0, 0   |
 | lineWidth    | multiple of line width                             | 1         |
 | follow       | mouse follow                                       | true      |
+| mouseDist    | distance between point and mouse                   | 20000     |
+
 ### style
     Support style, default style as follows:
 | Property     | Default   |

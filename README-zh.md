@@ -7,6 +7,8 @@
 
 创意来源于 [canvas-nest.js](https://github.com/hustcc/canvas-nest.js) 项目
 
+![screenshot](./screenshot.jpg)
+
 ## 安装  
 
 ```bash
@@ -58,6 +60,7 @@ import ReactCanvasNest from 'react-canvas-nest';
 | lineColor    | 两点间连线的颜色   | 0, 0, 0   |
 | lineWidth    | 两点间连线的宽度   | 1         |
 | follow       | 鼠标跟随         | true       |  
+| mouseDist    | 鼠标与点之间的距离 | 20000     |
 
 ### style  
 
