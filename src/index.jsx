@@ -22,7 +22,7 @@ class ReactCanvasNest extends Component {
             lineColor   : '0,0,0',
             lineWidth   : 1,           // multiple of line width
             pointColor  : '255,0,0',
-            pointR      : 3,           // radius of the point,
+            pointR      : 3,           // radius of the point
             follow      : true,
             ...config,
         };

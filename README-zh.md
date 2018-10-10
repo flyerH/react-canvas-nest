@@ -1,12 +1,15 @@
 # React-Canvas-Nest
+[![NPM version](https://img.shields.io/npm/v/react-canvas-nest.svg)](https://www.npmjs.com/package/react-canvas-nest) [![GitHub license](https://img.shields.io/github/license/flyerH/react-canvas-nest.svg)](https://github.com/flyerH/react-canvas-nest/blob/master/LICENSE)  
+
+[English](./README.md) | 简体中文
 
 >canvas-nest的React版  
 
-[![NPM version](https://img.shields.io/npm/v/react-canvas-nest.svg)](https://www.npmjs.com/package/react-canvas-nest) [![GitHub license](https://img.shields.io/github/license/flyerH/react-canvas-nest.svg)](https://github.com/flyerH/react-canvas-nest/blob/master/LICENSE)
+创意来源于 [canvas-nest.js](https://github.com/hustcc/canvas-nest.js) 项目
 
 ## 安装  
 
-```sh
+```bash
 # 推荐使用 yarn
 yarn add react-canvas-nest
 
@@ -16,7 +19,7 @@ npm install react-canvas-nest
 
 ## 使用  
 
-**使用方法可参考 [example](./example)**
+**注意：使用方法可参考 [example](./example)**
 
 - 引入组件  
 
@@ -66,7 +69,10 @@ import ReactCanvasNest from 'react-canvas-nest';
 | opacity      | 1         |
 | display      | block     |
 | position     | absolute  |
-
+## 相关项目
+- [canvas-nest.js](https://github.com/hustcc/canvas-nest.js): canvas-nest原生js版
+- [vue-canvas-nest](https://github.com/ZYSzys/vue-canvas-nest): canvas-nest vue版
+- [canvas-nest-for-wp](https://github.com/aTool-org/canvas-nest-for-wp): wordpress插件，在插件市场搜索 `canvas-nest` 即可安装
 ## License
 
 React-Canvas-Nest is [MIT licensed](./LICENSE).
