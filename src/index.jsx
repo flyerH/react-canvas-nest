@@ -13,18 +13,18 @@ class ReactCanvasNest extends Component {
             display : 'block',
             position: 'absolute',
             ...style
-        }
+        };
 
         const canvasConfig = {
-            count       : 88,          // count of points 
-            dist        : 6000,        // maximum length of line segments between two points
-            pointOpacity: 1,           // transparency of points
-            lineColor   : '0,0,0',
-            lineWidth   : 1,           // multiple of line width
-            pointColor  : '255,0,0',
-            pointR      : 1,           // radius of the point
+            count       : 88,                // count of points 
+            dist        : 6000,              // maximum length of line segments between two points
+            pointOpacity: 1,                 // transparency of points
+            lineColor   : '0, 0, 0',
+            lineWidth   : 1,                 // multiple of line width
+            pointColor  : '114, 114, 114',
+            pointR      : 1,                 // radius of the point
             follow      : true,
-            mouseDist   : 20000,       // mouse point dist
+            mouseDist   : 20000,             // mouse point dist
             ...config,
         };
 
@@ -33,7 +33,7 @@ class ReactCanvasNest extends Component {
             outDivHeight: null,
             canvasStyle,
             canvasConfig
-        }
+        };
 
     }
 
@@ -81,12 +81,12 @@ class ReactCanvasNest extends Component {
                 xStep: 2 * Math.random() - 1,    // step size of point movement 
                 yStep: 2 * Math.random() - 1,
                 max  : dist
-            })
+            });
         }
 
         return points;
 
-    };
+    }
 
     setCanvas = element => {
 
@@ -131,7 +131,8 @@ class ReactCanvasNest extends Component {
             const { pointsWithMouse, canvasConfig } = this.state;
             const points                            = [...pointsWithMouse];
     
-            points[points.length - 1] = { x, y, max: canvasConfig.mouseDist }
+            points[points.length - 1] = { x, y, max: canvasConfig.mouseDist };
+
             this.setState({
                 pointsWithMouse: points
             });
@@ -144,13 +145,13 @@ class ReactCanvasNest extends Component {
             const y = e.clientY - parent.offsetTop + document.scrollingElement.scrollTop;
             setMouseCoordinate(x, y);
 
-        }
+        };
 
         const clearMouse = () => {
 
             setMouseCoordinate(null, null);
 
-        }
+        };
 
         if (follow) {
 
@@ -219,7 +220,7 @@ class ReactCanvasNest extends Component {
     render() {
 
         const { canvasStyle, outDivWidth, outDivHeight } = this.state;
-        
+
         return (
             <canvas ref = {this.setCanvas} style = {canvasStyle} width = {outDivWidth} height = {outDivHeight} className = {this.props.className || ''} />
         )

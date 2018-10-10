@@ -50,17 +50,17 @@ import ReactCanvasNest from 'react-canvas-nest';
 
 ### config  
 
-| 参数          | 说明             | 默认值     |
-| ------------ | :--------------: | :-------: |
-| count        | 点的数量          | 88        |
-| pointR       | 点的半径          | 1         |
-| pointColor   | 点的颜色          | 255, 0, 0 |
-| pointOpacity | 点的透明度        | 1         |
-| dist         | 两点相连的最大距离 | 6000       |
-| lineColor    | 两点间连线的颜色   | 0, 0, 0   |
-| lineWidth    | 两点间连线的宽度   | 1         |
-| follow       | 鼠标跟随         | true       |  
-| mouseDist    | 鼠标与点之间的距离 | 20000     |
+| 参数          | 说明             | 默认值         |
+| ------------ | :--------------: | :-----------: |
+| count        | 点的数量          | 88            |
+| pointR       | 点的半径          | 1             |
+| pointColor   | 点的颜色          | 114, 114, 114 |
+| pointOpacity | 点的透明度        | 1             |
+| dist         | 两点相连的最大距离 | 6000           |
+| lineColor    | 两点间连线的颜色   | 0, 0, 0       |
+| lineWidth    | 两点间连线的宽度   | 1             |
+| follow       | 鼠标跟随         | true           |  
+| mouseDist    | 鼠标与点之间的距离 | 20000          |
 
 ### style  
 

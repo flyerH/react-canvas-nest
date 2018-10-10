@@ -35,17 +35,17 @@ import ReactCanvasNest from 'react-canvas-nest';
 ### className
     Support className
 ### config
-| Property     | Description                                        | Default   |
-| ------------ | :------------------------------------------------: | :-------: |
-| count        | count of points                                    | 88        |
-| pointR       | radius of the point                                | 1         |
-| pointColor   |                                                    | 255, 0, 0 |
-| pointOpacity | transparency of points                             | 1         |
-| dist         | maximum distance between two point                 | 6000      |
-| lineColor    |                                                    | 0, 0, 0   |
-| lineWidth    | multiple of line width                             | 1         |
-| follow       | mouse follow                                       | true      |
-| mouseDist    | distance between point and mouse                   | 20000     |
+| Property     | Description                                        | Default       |
+| ------------ | :------------------------------------------------: | :-----------: |
+| count        | count of points                                    | 88            |
+| pointR       | radius of the point                                | 1             |
+| pointColor   |                                                    | 114, 114, 114 |
+| pointOpacity | transparency of points                             | 1             |
+| dist         | maximum distance between two point                 | 6000          |
+| lineColor    |                                                    | 0, 0, 0       |
+| lineWidth    | multiple of line width                             | 1             |
+| follow       | mouse follow                                       | true          |
+| mouseDist    | distance between point and mouse                   | 20000         |
 
 ### style
     Support style, default style as follows:
