@@ -1,7 +1,7 @@
 {
   "name": "react-canvas-nest",
   "version": "1.0.3",
-  "description": "",
+  "description": "React component for a nest backgroud",
   "main": "./dist/react-canvas-nest.min.js",
   "scripts": {
     "start": "npm run dev",
@@ -25,6 +25,10 @@
     "url": "https://github.com/flyerH/react-canvas-nest/issues"
   },
   "homepage": "https://github.com/flyerH/react-canvas-nest#readme",
+  "peerDependencies": {
+    "react": ">=15.0.0",
+    "react-dom": ">=15.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.0",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
@@ -36,13 +40,11 @@
     "mini-css-extract-plugin": "^0.4.3",
     "postcss-loader": "^3.0.0",
     "precss": "^3.1.2",
+    "react": "15.0.0",
+    "react-dom": "15.0.0",
     "rimraf": "^2.6.2",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.1",
     "webpack-dev-server": "^3.1.9"
-  },
-  "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2"
   }
 }
