@@ -5,7 +5,7 @@
 
 >canvas-nest的React版  
 
-创意来源于 [canvas-nest.js](https://github.com/hustcc/canvas-nest.js) 项目
+创意来源于 [canvas-nest.js](https://github.com/hustcc/canvas-nest.js) 项目
 
 ## 安装  
 
