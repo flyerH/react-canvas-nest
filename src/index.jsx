@@ -57,12 +57,28 @@ class ReactCanvasNest extends Component {
         if (!style.position || style.positon === 'static')
             style.position = 'relative';
 
+        this.setSize(this.init);
+
+        window.addEventListener('resize', this.setSize);
+
+    }
+
+    componentWillUnmount() {
+
+        window.removeEventListener('resize', this.setSize)
+
+    }
+
+    setSize = fn => {
+
+        const parent = this.canvasRef.parentNode;
+        
         this.setState({
 
             outDivWidth : parent.clientWidth,
             outDivHeight: parent.clientHeight
 
-        }, this.init);
+        }, typeof fn === 'function' ? fn : '');
 
     }
 
