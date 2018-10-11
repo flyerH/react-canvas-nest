@@ -25,7 +25,7 @@ class ReactCanvasNest extends Component {
             pointR      : 1,                 // radius of the point
             follow      : true,
             mouseDist   : 20000,             // mouse point dist
-            ...config,
+            ...config
         };
 
         this.state = {
