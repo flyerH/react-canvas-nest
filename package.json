@@ -6,8 +6,8 @@
   "scripts": {
     "start": "npm run dev",
     "build": "webpack --config ./config/webpack.conf.build.js",
-    "prod": "rimraf dist/* && npm run build",
-    "dev": "rimraf dist/* && (npm run build -- --watch --devtool cheap-module-eval-source-map & webpack-dev-server --color --config ./config/webpack.conf.dev.js)"
+    "prod": "rimraf example/dist/* && (webpack --config ./config/webpack.conf.prod.js)",
+    "dev": "rimraf dist/* && (npm run build -- --watch --devtool cheap-module-eval-source-map & webpack-dev-server --color --config ./config/webpack.conf.dev.js )"
   },
   "repository": {
     "type": "git",
