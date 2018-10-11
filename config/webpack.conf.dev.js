@@ -21,7 +21,6 @@ module.exports = {
             loader: [
                 MiniCssExtractPlugin.loader,
                 'css-loader',
-                'postcss-loader'
             ]
         }]
     },
@@ -30,7 +29,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'My App',
+            title: 'React-Canvas-Nest',
             inject: true,
             filename: path.resolve(__dirname, '../example/dist/index.html'),
             template: 'example/template/index.html'

@@ -24,18 +24,22 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     optimization: {
-        minimizer: [new UglifyJsPlugin({
-            cache: true,
-            parallel: true,
-            uglifyOptions: {
-                compress: {
-                    collapse_vars: true,
-                },
-                output: {
-                    comments: false,
-                    beautify: false,
+        minimizer: [
+            new UglifyJsPlugin({
+                cache: true,
+                parallel: true,
+                uglifyOptions: {
+                    compress: {
+                        drop_console: true,
+                        collapse_vars: true,
+                        reduce_vars: true
+                    },
+                    output: {
+                        comments: false,
+                        beautify: false,
+                    }
                 }
-            }
-        })]
-    }   
+            })
+        ]
+    }
 };

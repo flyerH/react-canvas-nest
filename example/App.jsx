@@ -18,7 +18,7 @@ class App extends Component {
                         follow: !follow
                     })
                 }} className='followBtn'>{ follow ? 'Stop' : 'Start' } Follow</button>
-                <ReactCanvasNest className='test' config = {{ follow }} />
+                <ReactCanvasNest className='canvasNest' config = {{ follow }} />
             </div>
 
         )

@@ -16,13 +16,18 @@ yarn add react-canvas-nest
 # or use npm
 npm install react-canvas-nest
 ```
+
 ## Usage
-**Note: You can refer to this [example](./example).**
-- Import Component
+
+**Note:**
+- You can refer to this [example](./example).
+- Component size depends on parent node size.
+
+Import Component
 ```js
 import ReactCanvasNest from 'react-canvas-nest';
 ```
-- Use Component
+Use Component
   - Default
   ```jsx
   <ReactCanvasNest />
@@ -31,9 +36,11 @@ import ReactCanvasNest from 'react-canvas-nest';
   ```jsx
   <ReactCanvasNest className = 'nest' config = {{ pointColor: ' 255, 255, 255 ' }} style = {{ zIndex: 99 }} />
   ```
-## API  
+  
+## API
 ### className
-    Support className
+    Support className attribute
+
 ### config
 | Property     | Description                                        | Default       |
 | ------------ | :------------------------------------------------: | :-----------: |
@@ -48,16 +55,18 @@ import ReactCanvasNest from 'react-canvas-nest';
 | mouseDist    | distance between point and mouse                   | 20000         |
 
 ### style
-    Support style, default style as follows:
+    Support style attribute, default style as follows:
 | Property     | Default   |
 | ------------ | :-------: |
 | zIndex       | -1        |
 | opacity      | 1         |
 | display      | block     |
 | position     | absolute  |
+
 ## Related projects
 - [canvas-nest.js](https://github.com/hustcc/canvas-nest.js): project use by native javascript.
 - [vue-canvas-nest](https://github.com/ZYSzys/vue-canvas-nest): vue component wrapper.
 - [canvas-nest-for-wp](https://github.com/aTool-org/canvas-nest-for-wp): a wordpress plugin, search `canvas-nest` in wordpress store.
+
 ## License
 React-Canvas-Nest is [MIT licensed](./LICENSE).

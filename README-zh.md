@@ -21,15 +21,17 @@ npm install react-canvas-nest
 
 ## 使用  
 
-**注意：使用方法可参考 [example](./example)**
+**注意：**
+- 使用方法可参考 [example](./example)
+- 组件大小取决于父元素大小
 
-- 引入组件  
+引入组件  
 
 ```js
 import ReactCanvasNest from 'react-canvas-nest';
 ```  
 
-- 使用组件  
+使用组件  
 
   - 默认  
   
@@ -43,10 +45,10 @@ import ReactCanvasNest from 'react-canvas-nest';
   <ReactCanvasNest className = 'nest' config = {{ pointColor: ' 255, 255, 255 ' }} style = {{ zIndex: 99 }} />
   ```  
 
-## API  
+## API
 ### className  
 
-    支持className  
+    支持className属性
 
 ### config  
 
@@ -64,7 +66,7 @@ import ReactCanvasNest from 'react-canvas-nest';
 
 ### style  
 
-    支持自定义style，默认使用的样式如下：
+    支持自定义style属性，默认使用的样式如下：
 
 | 参数          | 默认值     |
 | ------------ | :-------: |
@@ -72,10 +74,12 @@ import ReactCanvasNest from 'react-canvas-nest';
 | opacity      | 1         |
 | display      | block     |
 | position     | absolute  |
+
 ## 相关项目
 - [canvas-nest.js](https://github.com/hustcc/canvas-nest.js): canvas-nest原生js版
 - [vue-canvas-nest](https://github.com/ZYSzys/vue-canvas-nest): canvas-nest vue版
 - [canvas-nest-for-wp](https://github.com/aTool-org/canvas-nest-for-wp): wordpress插件，在插件市场搜索 `canvas-nest` 即可安装
+
 ## License
 
 React-Canvas-Nest is [MIT licensed](./LICENSE).
