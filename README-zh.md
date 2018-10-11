@@ -23,7 +23,7 @@ npm install react-canvas-nest
 
 **注意：**
 - 使用方法可参考 [example](./example)
-- 组件大小取决于父元素大小
+- 组件大小取决于父元素大小
 
 引入组件  
 
