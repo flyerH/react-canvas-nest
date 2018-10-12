@@ -34,7 +34,7 @@ Use Component
   ```
   - Custom 
   ```jsx
-  <ReactCanvasNest className = 'nest' config = {{ pointColor: ' 255, 255, 255 ' }} style = {{ zIndex: 99 }} />
+  <ReactCanvasNest className = 'canvasNest' config = {{ pointColor: ' 255, 255, 255 ' }} style = {{ zIndex: 99 }} />
   ```
   
 ## API

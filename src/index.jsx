@@ -72,7 +72,7 @@ class ReactCanvasNest extends Component {
     setSize = fn => {
 
         const parent = this.canvasRef.parentNode;
-        
+
         this.setState({
 
             outDivWidth : parent.clientWidth,
@@ -136,23 +136,23 @@ class ReactCanvasNest extends Component {
 
     }
 
-    
+
 
     mouseEvent = (follow) => {
 
         const parent = this.canvasRef.parentNode;
 
         const setMouseCoordinate = (x, y) => {
-        
+
             const { pointsWithMouse, canvasConfig } = this.state;
             const points                            = [...pointsWithMouse];
-    
+
             points[points.length - 1] = { x, y, max: canvasConfig.mouseDist };
 
             this.setState({
                 pointsWithMouse: points
             });
-    
+
         };
 
         const followMouse = e => {
