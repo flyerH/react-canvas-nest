@@ -96,7 +96,8 @@ class ReactCanvasNest extends Component {
                 y    : Math.random() * height,
                 xStep: 2 * Math.random() - 1,    // step size of point movement 
                 yStep: 2 * Math.random() - 1,
-                max  : dist
+                max  : dist,
+                // runFlag : false
             });
         }
 
@@ -198,36 +199,65 @@ class ReactCanvasNest extends Component {
             context.fillStyle = `rgba(${pointColor},${pointOpacity})`;
             context.arc(point.x, point.y, pointR, 0, 2 * Math.PI);
             context.fill();
+            
 
             point.x     += point.xStep;                                                         // point movement
             point.y     += point.yStep;
-            point.xStep *= (point.x + pointR > outDivWidth || point.x - pointR < 0) ? -1 : 1;
-            point.yStep *= (point.y + pointR > outDivHeight || point.y - pointR < 0) ? -1 : 1;
-
+            // point.xStep *= (point.x + pointR > outDivWidth || point.x - pointR < 0) ? -1 : 1;
+            // point.yStep *= (point.y + pointR > outDivHeight || point.y - pointR < 0) ? -1 : 1;
+            if (point.runFlag) {
+                // console.log('here');
+                point.xStep= 2 * Math.random() - 1;
+                point.yStep= 2 * Math.random() - 1;
+                point.runFlag = false;
+            }
             for (let nextIndex = 0; nextIndex < pointsWithMouse.length; ++nextIndex) {
 
                 const nextPoint = pointsWithMouse[nextIndex];
-
                 if (nextPoint.x) {
 
                     const xDist = point.x - nextPoint.x;
                     const yDist = point.y - nextPoint.y;
                     const dist  = xDist * xDist + yDist * yDist;  // the square of the distance between two points
 
-                    if (dist < nextPoint.max)
-                        nextIndex + 1 === pointsWithMouse.length && dist >= nextPoint.max / 2 && (point.x -= 0.03 * xDist, point.y -= 0.03 * yDist);
+                    if (dist < nextPoint.max) {
+                        
+                        // nextIndex + 1 === pointsWithMouse.length && dist >= nextPoint.max / 2 && (point.x -= 0.1 * xDist, point.y -= 0.1 * yDist);
+                        if (nextIndex + 1 === pointsWithMouse.length) {
 
-                    const scale = (nextPoint.max - dist) / (nextPoint.max);
-                    context.beginPath();
-                    context.lineWidth   = (scale * lineWidth) / 2;
-                    context.strokeStyle = `rgba(${lineColor},${scale})`;
-                    context.moveTo(point.x, point.y);
-                    context.lineTo(nextPoint.x, nextPoint.y);
-                    context.stroke();
+                            const mouseR = nextPoint.max / 2;
+
+                            if (Math.abs(dist - mouseR) <100) {
+                                point.xStep = 0;
+                                point.yStep = 0;
+                                point.runFlag = true;
+                            }
+                            if (dist >= mouseR) {
+                                point.x -= 0.03 * xDist;
+                                point.y -= 0.03 * yDist;
+                            }
+
+                        }
+                        
+                        
+                        const scale = (nextPoint.max - dist) / (nextPoint.max);
+                        context.beginPath();
+                        context.lineWidth = (scale * lineWidth) / 2;
+                        context.strokeStyle = `rgba(${lineColor},${scale})`;
+                        context.moveTo(point.x, point.y);
+                        context.lineTo(nextPoint.x, nextPoint.y);
+                        context.stroke();
+
+                    }
+                    
+                    
 
                 }
 
             }
+            
+            point.xStep *= (point.x + pointR > outDivWidth || point.x - pointR < 0) ? -1 : 1;
+            point.yStep *= (point.y + pointR > outDivHeight || point.y - pointR < 0) ? -1 : 1;
 
         }
         requestAnimationFrame(this.drawNest);
