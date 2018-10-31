@@ -1,6 +1,6 @@
 {
   "name": "react-canvas-nest",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "React component for a nest backgroud",
   "main": "./dist/react-canvas-nest.min.js",
   "scripts": {
