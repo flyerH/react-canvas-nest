@@ -78,7 +78,7 @@ class ReactCanvasNest extends Component {
             outDivWidth : parent.clientWidth,
             outDivHeight: parent.clientHeight
 
-        }, typeof fn === 'function' ? fn : '');
+        }, typeof fn === 'function' ? fn : null);
 
     }
 
