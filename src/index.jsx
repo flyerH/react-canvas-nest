@@ -65,7 +65,9 @@ class ReactCanvasNest extends Component {
 
     componentWillUnmount() {
 
-        window.removeEventListener('resize', this.setSize)
+        window.removeEventListener('resize', this.setSize);
+        cancelAnimationFrame(this.raf);
+        this.canvasRef.parentNode.removeChild(this.canvasRef);
 
     }
 
@@ -230,7 +232,7 @@ class ReactCanvasNest extends Component {
             }
 
         }
-        requestAnimationFrame(this.drawNest);
+        this.raf = requestAnimationFrame(this.drawNest);
     }
 
     render() {
