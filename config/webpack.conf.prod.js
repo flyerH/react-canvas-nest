@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -29,19 +29,16 @@ module.exports = {
         extensions: ['.js', '.jsx', '.css']
     },
     optimization: {
+        minimize: true,
         minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                uglifyOptions: {
+            new TerserPlugin({
+                cache: false,
+                terserOptions: {
                     compress: {
-                        drop_console: true,
-                        collapse_vars: true,
-                        reduce_vars: true
+                        drop_console: true
                     },
                     output: {
-                        comments: false,
-                        beautify: false,
+                        beautify: false
                     }
                 }
             })

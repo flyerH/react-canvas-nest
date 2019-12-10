@@ -1,5 +1,5 @@
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -24,19 +24,16 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     optimization: {
+        minimize: true,
         minimizer: [
-            new UglifyJsPlugin({
-                cache: true,
-                parallel: true,
-                uglifyOptions: {
+            new TerserPlugin({
+                sourceMap: true,
+                terserOptions: {
                     compress: {
-                        drop_console: true,
-                        collapse_vars: true,
-                        reduce_vars: true
+                        drop_console: true
                     },
                     output: {
-                        comments: false,
-                        beautify: false,
+                        beautify: false
                     }
                 }
             })
