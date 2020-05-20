@@ -8,6 +8,7 @@ module.exports = {
         filename: 'react-canvas-nest.min.js',
         path: path.resolve(__dirname, '../dist'),
         libraryTarget: 'umd',
+        globalObject: 'typeof self !== \'undefined\' ? self : this'
     },
     resolve: {
         extensions: ['.js', '.jsx']
